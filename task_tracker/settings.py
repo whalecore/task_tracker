@@ -53,7 +53,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'task_tracker.urls'
 
-TEMPLATEDIR = os.path.join(BASE_DIR, 'templates')
+TEMPLATEDIR = os.path.join(BASE_DIR, 'task_tracker/templates/')
 
 TEMPLATES = [
     {
@@ -121,4 +121,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "task_tracker/static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "task_tracker/static",
+]
+
+# Redirecting settings
+
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'

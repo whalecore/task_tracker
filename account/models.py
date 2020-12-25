@@ -20,7 +20,7 @@ class Task(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     redline = models.DateTimeField()
     deadline = models.DateTimeField()
-    worker = models.OneToOneField(
+    worker = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
@@ -30,4 +30,3 @@ class Task(models.Model):
 class Subtask(Task, models.Model):
     task = models.ForeignKey(
         Task, on_delete=models.PROTECT, related_name='main_task')
-

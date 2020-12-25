@@ -28,8 +28,6 @@ class Task(models.Model):
 
 
 class Subtask(Task, models.Model):
-    task = models.ForeignKey(Task, on_delete=models.PROTECT)
+    task = models.ForeignKey(
+        Task, on_delete=models.PROTECT, related_name='main_task')
 
-
-class Column(models.Model):
-    pass

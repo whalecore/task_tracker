@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from .forms import LoginForm, UserRegistrationForm
+from .models import Project, Subtask, Task
 
 
 def user_login(request):
@@ -29,12 +30,6 @@ def user_login(request):
     return render(request, 'account/login.html', {'form': form})
 
 
-@login_required
-def dashboard(request):
-    
-    return render(request, 'account/dashboard.html', {'section': dashboard})
-
-
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -48,3 +43,16 @@ def register(request):
     else:
         user_form = UserRegistrationForm()
     return render(request, 'account/register.html', {'user_form': user_form})
+
+
+@login_required
+def dashboard(request):
+    projects = Project.objects.all()
+    return render(request, 'account/dashboard.html', {'section': dashboard, 'projects': projects})
+
+
+@login_required
+def project(request, slug):
+    project = Project.objects.get(slug=slug)
+    tasks = project.task_set.all()
+    return render(request, 'account/tasks.html', {'project': project, 'tasks': tasks})

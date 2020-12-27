@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Tasks
+{% endblock title %}
+
+{% block content %}
+<h1>Tasks</h1>
+{% if tasks|length != 0 %}
+<div class="task">
+
+    <h2>To Do</h2>
+    <ol>
+        {% for task in tasks %}
+        {% if task.status == 'To Do' %}
+        <li><a href="#">{{ task.name }}</a>
+            <p>Created: {{ task.created|date:"H:m, d.m.Y" }}</p>
+            <p>{{ task.description|truncatewords:30 }}</p>
+            <p>Redline: {{ task.redline|date:"H:m, d.m.Y" }}</p>
+            <p>Deadline: {{ task.deadline|date:"H:m, d.m.Y" }}</p>
+            <p>Status: {{ task.status }}</p>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ol>
+</div>
+<div class="task">
+    <h2>In Progress</h2>
+    <ol>
+        {% for task in tasks %}
+        {% if task.status == 'In Progress' %}
+        <li>
+            <a href="#">{{ task.name }}</a>
+            <p>Created: {{ task.created|date:"H:m, d.m.Y" }}</p>
+            <p>{{ task.description|truncatewords:30 }}</p>
+            <p>Redline: {{ task.redline|date:"H:m, d.m.Y" }}</p>
+            <p>Deadline: {{ task.deadline|date:"H:m, d.m.Y" }}</p>
+            <p>Status: {{ task.status }}</p>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ol>
+</div>
+<div class="task">
+    <h2>Testing</h2>
+    <ol>
+        {% for task in tasks %}
+        {% if task.status == 'Testing' %}
+        <li>
+            <a href="#">{{ task.name }}</a>
+            <p>Created: {{ task.created|date:"H:m, d.m.Y" }}</p>
+            <p>{{ task.description|truncatewords:30 }}</p>
+            <p>Redline: {{ task.redline|date:"H:m, d.m.Y" }}</p>
+            <p>Deadline: {{ task.deadline|date:"H:m, d.m.Y" }}</p>
+            <p>Status: {{ task.status }}</p>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ol>
+</div>
+<div class="task">
+    <h2>Done</h2>
+    <ol>
+        {% for task in tasks %}
+        {% if task.status == 'Done' %}
+        <li>
+            <a href="#">{{ task.name }}</a>
+            <p>Created: {{ task.created|date:"H:m, d.m.Y" }}</p>
+            <p>{{ task.description|truncatewords:30 }}</p>
+            <p>Redline: {{ task.redline|date:"H:m, d.m.Y" }}</p>
+            <p>Deadline: {{ task.deadline|date:"H:m, d.m.Y" }}</p>
+            <p>Status: {{ task.status }}</p>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ol>
+</div>
+{% else %}
+<h3>There's no tasks on this project yet.</h3>
+{% endif %}
+{% endblock content %}

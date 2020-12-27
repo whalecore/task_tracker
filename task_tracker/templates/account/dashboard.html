@@ -6,5 +6,12 @@ Dashboard
 
 {% block content %}
 <h1>Dashboard</h1>
-
+<h2>Projects</h2>
+{% for prj in projects %}
+{% if request.user == prj.worker %}
+<ol>
+<li><a href="{% url 'project' prj.slug %}">{{prj.name}}</a></li>
+</ol>
+{% endif %}
+{% endfor %}
 {% endblock content %}

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from .forms import LoginForm, UserRegistrationForm
+from .models import Task, Subtask
 
 
 def user_login(request):
@@ -31,8 +32,8 @@ def user_login(request):
 
 @login_required
 def dashboard(request):
-    
-    return render(request, 'account/dashboard.html', {'section': dashboard})
+    tasks = Task.objects.all()
+    return render(request, 'account/dashboard.html', {'section': dashboard, 'tasks': tasks})
 
 
 def register(request):

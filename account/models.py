@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 
 class Project(models.Model):
@@ -13,6 +14,10 @@ class Project(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("project", kwargs={"project_slug": self.slug})
+    
 
 
 class Task(models.Model):
@@ -32,14 +37,18 @@ class Task(models.Model):
     description = models.TextField()
     status = models.CharField(max_length=30, choices=STATUSES, default=TD)
     created = models.DateTimeField(auto_now_add=True)
-    redline = models.DateTimeField()
-    deadline = models.DateTimeField()
+    redline = models.DateTimeField(null=True, blank=True)
+    deadline = models.DateTimeField(null=True, blank=True)
     worker = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("task", kwargs={"task_slug": self.slug})
+    
 
 
 class Subtask(models.Model):
@@ -65,6 +74,6 @@ class Subtask(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     task = models.ForeignKey(
         Task, on_delete=models.PROTECT, related_name='subtasks')
+
     def __str__(self) -> str:
         return self.name
-    

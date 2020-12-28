@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ task.name }}
+{% endblock title %}
+
+{% block content %}
+<h1>{{ task.name }}</h1>
+<p class="created">Created on {{ task.created }}</p>
+<p>{{ task.description }}</p>
+<p class="due">Redline: {{ task.redline }}, Deadline: {{ task.deadline }}</p>
+<p>Status: </p>
+<h2>Subtasks:</h2>
+{% if subtasks %}
+<ol>
+{% for subtask in subtasks %}
+<li><a href="#">{{ subtask.name }}</a>
+<p class="created">Created on {{ subtask.created }}</p>
+<p>{{ subtask.description }}</p>
+<p class="due">Redline: {{ subtask.redline }}, Deadline: {{ subtask.deadline }}</p>
+</li>
+{% endfor %}
+</ol>
+{% endif %}
+{% endblock content %}

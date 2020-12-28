@@ -14,6 +14,7 @@
   <div id="header">
     <span class="logo">Task Tracker</span>
     {% if request.user.is_authenticated %}
+    
     <ul class="menu">
       <li {% if section == "dashboard" %} class="selected" {% endif %}>
         <a href="{% url 'dashboard' %}">My dashboard</a>
@@ -24,6 +25,9 @@
       <li {% if section == 'people' %} class="selected" {% endif %}>
         <a href="#">People</a>
       </li>
+      {% if request.user.username == 'admin' %}
+      <li><a href="{% url 'create_task' %}">Create Task</a></li>
+      {% endif %}
     </ul>
     {% endif %}
     <span class="user">

@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
-from .forms import LoginForm, UserRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, TaskForm, SubtaskForm
 from .models import Project, Subtask, Task
 
 
@@ -52,7 +52,35 @@ def dashboard(request):
 
 
 @login_required
-def project(request, slug):
-    project = Project.objects.get(slug=slug)
+def project(request, project_slug):
+    project = Project.objects.get(slug=project_slug)
     tasks = project.task_set.all()
+    # if request.method == 'POST':
+    #     form = ChangeTaskWorkerForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    # else:
+    #     form = ChangeTaskWorkerForm()
     return render(request, 'account/tasks.html', {'project': project, 'tasks': tasks})
+
+
+@login_required
+def task(request, task_slug):
+    task = Task.objects.get(slug=task_slug)
+    subtasks = task.subtasks.all()
+    return render(request, 'account/task.html', {'task': task, 'subtasks': subtasks})
+
+@login_required
+def create_task(request):
+    if request.method == 'POST':
+        task_form = TaskForm(request.POST)
+        if task_form.is_valid():
+            cd = task_form.cleaned_data
+            new_task = task_form.save(commit=False)
+            new_task.save()
+
+            return redirect(new_task.get_absolute_url())
+    else:
+        task_form = TaskForm()
+
+    return render(request, 'account/create_task.html', {'task_form': task_form})

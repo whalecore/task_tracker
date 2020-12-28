@@ -13,5 +13,7 @@ urlpatterns = [
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(),
          name='password_change_done'),
     path('register/', views.register, name='register'),
-    path('projects/<slug:slug>/', views.project, name='project'),
+    path('projects/<slug:project_slug>/', views.project, name='project'),
+    path('projects/tasks/<slug:task_slug>/', views.task, name='task'),
+    path('tasks/create_task/', views.create_task, name='create_task')
 ]

@@ -6,18 +6,12 @@ Dashboard
 
 {% block content %}
 <h1>Dashboard</h1>
-<div class="todo">
-<h2>To Do</h2>
-{% for task in tasks %}
-{% if task.status == 'To Do' %}
-<h3>{{ task.name }}</h3>
-<br>
-<p>{{ task.description|truncatewords:30 }}</p>
-<br>
-<p>Redline: {{ task.redline|date:"H:i:s, d:m:Y" }}</p>
-<p>Deadline: {{ task.deadline|date:"H:i:s, d:m:Y" }}</p>
-<p>Assigned to: {{ task.worker }}</p>
+<h2>Projects</h2>
+{% for prj in projects %}
+{% if request.user == prj.worker %}
+<ol>
+<li><a href="{% url 'project' prj.slug %}">{{prj.name}}</a></li>
+</ol>
 {% endif %}
 {% endfor %}
-</div>
 {% endblock content %}
